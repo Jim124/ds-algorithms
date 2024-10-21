@@ -72,7 +72,7 @@ class LinkedList {
       return this.printList();
     }
     const leader = this.traverseToIndex(index - 1);
-    const deleteNode = this.traverseToIndex(index);
+    const deleteNode = leader.next;
     leader.next = deleteNode.next;
     this.length--;
     return this.printList();
@@ -88,7 +88,7 @@ let arr = myLinkedList.printList();
 console.log(arr);
 arr = myLinkedList.insert(2, 99);
 console.log(arr);
-arr = myLinkedList.remove(0);
+arr = myLinkedList.remove(2);
 console.log(arr);
 
 let obj = { value: true };
