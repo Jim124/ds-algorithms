@@ -14,6 +14,10 @@ class LinkedList {
     this.length = 1;
   }
   append(value) {
+    // const newNode = {
+    //   value: value,
+    //   next: null,
+    // };
     const newNode = new Node(value);
     this.tail.next = newNode;
     this.tail = newNode;
@@ -21,6 +25,10 @@ class LinkedList {
     return this;
   }
   preAppend(value) {
+    // const newNode = {
+    //   value: value,
+    //   next: null,
+    // };
     const newNode = new Node(value);
     newNode.next = this.head;
     this.head = newNode;
@@ -28,45 +36,34 @@ class LinkedList {
     return this;
   }
   printList() {
+    let currentValue = this.head;
     const arr = [];
-    let currentNode = this.head;
-    while (currentNode !== null) {
-      const value = currentNode.value;
+    while (currentValue !== null) {
+      const value = currentValue.value;
       arr.push(value);
-      currentNode = currentNode.next;
+      currentValue = currentValue.next;
     }
     return arr;
   }
 
   insert(index, value) {
     if (index === 0) {
-      return this.preAppend(value);
+      this.preAppend(value);
+      return this.printList();
     }
     if (index >= this.length) {
-      return this.append(value);
+      this.append(value);
+      return this.printList();
     }
     const newNode = new Node(value);
-    const currentNode = this.traverseToIndex(index - 1);
-    const holdingNext = currentNode.next;
+    const leader = this.traverseToIndex(index - 1);
+    const holdingNext = leader.next;
+    leader.next = newNode;
     newNode.next = holdingNext;
-    currentNode.next = newNode;
     this.length++;
     return this.printList();
   }
-  traverseToIndex(index) {
-    let counter = 0;
-    let currentNode = this.head;
-    while (counter !== index) {
-      currentNode = currentNode.next;
-      counter++;
-    }
-    return currentNode;
-  }
-
   remove(index) {
-    if (index >= this.length) {
-      return null;
-    }
     if (index === 0) {
       this.head = this.head.next;
       return this.printList();
@@ -77,22 +74,48 @@ class LinkedList {
     this.length--;
     return this.printList();
   }
+
+  reverse() {
+    if (!this.head.next) {
+      return this.head;
+    }
+    let first = this.head;
+    this.tail = this.head;
+    let second = first.next;
+    while (second) {
+      const temp = second.next;
+      second.next = first;
+      first = second;
+      second = temp;
+    }
+    this.head.next = null;
+    this.head = first;
+    return this;
+  }
+
+  traverseToIndex(index) {
+    let counter = 0;
+    let currentNode = this.head;
+    while (counter !== index) {
+      currentNode = currentNode.next;
+      counter++;
+    }
+    return currentNode;
+  }
 }
 
 const myLinkedList = new LinkedList(10);
 myLinkedList.append(5);
 myLinkedList.append(16);
 myLinkedList.preAppend(1);
+
 console.log(myLinkedList);
+console.log(myLinkedList.head);
 let arr = myLinkedList.printList();
 console.log(arr);
 arr = myLinkedList.insert(2, 99);
 console.log(arr);
 arr = myLinkedList.remove(2);
 console.log(arr);
-
-let obj = { value: true };
-let obj1 = obj;
-obj1.test = 1;
-obj1 = {};
-console.log(obj);
+arr = myLinkedList.reverse();
+console.log(arr);
