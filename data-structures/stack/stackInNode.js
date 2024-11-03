@@ -5,7 +5,6 @@ class Node {
   }
 }
 
-// first in last up
 class Stack {
   constructor() {
     this.top = null;
@@ -17,7 +16,7 @@ class Stack {
   }
   push(value) {
     const newNode = new Node(value);
-    if (this.length === 0) {
+    if (this.length == 0) {
       this.top = newNode;
       this.bottom = newNode;
     } else {
@@ -32,10 +31,9 @@ class Stack {
     if (!this.top) {
       return null;
     }
-    if (this.top === this.bottom) {
+    if (this.bottom == this.top) {
       this.bottom = null;
     }
-
     const holdingNode = this.top;
     this.top = holdingNode.next;
     this.length--;
@@ -45,10 +43,8 @@ class Stack {
 
 const myStack = new Stack();
 myStack.push('google');
-myStack.push('udemy');
-myStack.push('discord');
+myStack.push('Udemy');
+myStack.push('Amazon');
 console.log(myStack);
-console.log(myStack.peek());
-console.log(myStack.pop());
-console.log(myStack.pop());
-console.log(myStack.pop());
+myStack.pop();
+console.log(myStack);
